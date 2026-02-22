@@ -1,0 +1,130 @@
+services:
+  db_svc:
+    image: postgres:17
+    container_name: db_postgresql
+    restart: always
+    environment:
+      POSTGRESQL_USER: root
+      POSTGRESQL_PASSWORD: neron123
+      POSTGRESQL_DB: dbtrustbank
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  db_user_svc:
+    container_name: db_user_springboot
+    build:
+      context: db_user_springboot/
+      dockerfile: Dockerfile
+    depends_on:
+      - db_svc
+    environment:
+      - POSTGRESQL_USER=root
+      - POSTGRESQL_PASSWORD=neron123
+      - POSTGRESQL_DB=dbtrustbank
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_svc:5432/dbtrustbank
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=neron123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8888:8888"
+
+  svc_user_svc:
+    container_name: svc_user_springboot
+    build:
+      context: svc_user_springboot/
+      dockerfile: Dockerfile
+    depends_on:
+      - db_user_svc
+    ports:
+      - "8787:8787"
+
+  bff_user_svc:
+    container_name: bff_user_springboot
+    build:
+      context: bff_user_springboot/
+      dockerfile: Dockerfile
+    depends_on:
+      - svc_user_svc
+    ports:
+      - "8686:8686"
+    
+  db_account_svc:
+    container_name: db_account_springboot
+    build:
+      context: db_account_springboot/
+      dockerfile: Dockerfile
+    depends_on:
+      - db_svc
+    environment:
+      - POSTGRESQL_USER=root
+      - POSTGRESQL_PASSWORD=neron123
+      - POSTGRESQL_DB=dbtrustbank
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_svc:5432/dbtrustbank
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=neron123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8585:8585"
+
+  svc_account_svc:
+    container_name: svc_account_springboot
+    build:
+      context: svc_account_springboot/
+      dockerfile: Dockerfile
+    depends_on:
+      - db_account_svc
+    ports:
+      - "8484:8484"
+
+  bff_account_svc:
+    container_name: bff_account_springboot
+    build:
+      context: bff_account_springboot/
+      dockerfile: Dockerfile
+    depends_on:
+      - svc_account_svc
+    ports:
+      - "8383:8383"
+
+  db_transfer_svc:
+    container_name: db_transfer_springboot
+    build:
+      context: db_transfer_springboot/
+      dockerfile: Dockerfile
+    depends_on:
+      - db_svc
+    environment:
+      - POSTGRESQL_USER=root
+      - POSTGRESQL_PASSWORD=neron123
+      - POSTGRESQL_DB=dbtrustbank
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_svc:5432/dbtrustbank
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=neron123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8282:8282"
+
+  svc_transfer_svc:
+    container_name: svc_transfer_springboot
+    build:
+      context: svc_transfer_springboot/
+      dockerfile: Dockerfile
+    depends_on:
+      - db_transfer_svc
+    ports:
+      - "8181:8181"
+
+  bff_transfer_svc:
+    container_name: bff_transfer_springboot
+    build:
+      context: bff_transfer_springboot/
+      dockerfile: Dockerfile
+    depends_on:
+      - svc_transfer_svc
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
