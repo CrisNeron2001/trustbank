@@ -39,7 +39,7 @@ public class Ledger {
 	private int accountId;
 
 	@Basic
-	@Column(name = "operation_id", nullable = false)
+	@Column(name = "operation_id", nullable = false, insertable = false, updatable = false)
 	private int operationId;
 
 	@ManyToOne(fetch = FetchType.LAZY)

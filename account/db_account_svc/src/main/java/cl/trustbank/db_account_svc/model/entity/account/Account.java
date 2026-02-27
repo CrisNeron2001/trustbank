@@ -40,11 +40,11 @@ public class Account {
 	private int userId;
 
 	@Basic
-	@Column(name = "account_type_id", nullable = false)
+	@Column(name = "account_type_id", nullable = false, insertable = false, updatable = false)
 	private int accountTypeId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(
+	@JoinColumn( 
 		name = "account_type_id",
 		nullable = false,
 		referencedColumnName = "account_type_id",
@@ -58,7 +58,7 @@ public class Account {
 	private float balance;
 
 	@Basic
-	@Column(name = "currency_id", nullable = false)
+	@Column(name = "currency_id", nullable = false, insertable = false, updatable = false)
 	private int currencyId;
 
 	@ManyToOne(fetch = FetchType.LAZY)

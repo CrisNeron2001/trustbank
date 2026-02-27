@@ -15,6 +15,7 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -22,7 +23,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "user_trustbank")
+@Table(
+	name = "user_trustbank",
+	indexes = {
+		@Index(columnList = "rut_code", name = "idx_user_rut_code", unique = true),
+		@Index(columnList = "pass_code", name = "idx_user_pass_code")
+	}
+)
 public class User {
 
 	@Id
@@ -43,11 +50,7 @@ public class User {
 	private String lastName;
 
 	@Basic
-	@Column(name = "username", nullable = false, length = 50)
-	private String username;
-
-	@Basic
-	@Column(name = "rut_code", nullable = false, length = 12)
+	@Column(name = "rut_code", nullable = false, length = 12, unique = true)
 	private String rutCode;
 
 	@Basic
@@ -71,7 +74,7 @@ public class User {
 	private int failedAttempts;
 
 	@Basic
-	@Column(name = "role_id", nullable = false)
+	@Column(name = "role_id", nullable = false, insertable = false, updatable = false)
 	private int roleId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
