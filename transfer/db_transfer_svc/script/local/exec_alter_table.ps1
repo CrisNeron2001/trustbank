@@ -1,0 +1,1 @@
+psql -U postgres -d dbtrustbank -f C:\Users\kriss\worksplace\trustbank\transfer\db_transfer_svc\script\db\alter_table_transfer_add_constraint_fk.sql

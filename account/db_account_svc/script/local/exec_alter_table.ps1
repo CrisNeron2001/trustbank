@@ -1,0 +1,1 @@
+psql -U postgres -d dbtrustbank -f C:\Users\kriss\worksplace\trustbank\account\db_account_svc\script\db\alter_table_account_add_constraint_fk.sql
