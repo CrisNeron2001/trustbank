@@ -1,6 +1,6 @@
-FROM maven:latest-eclipse-temurin-25 as builder
+FROM maven:3.9.12-eclipse-temurin-25 as builder
 WORKDIR ./app
-COPY pom.xml
+COPY pom.xml .
 RUN mvn dependency:go-offline
 
 COPY src ./src
@@ -9,6 +9,6 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:25-jdk
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
-EXPOSE 81transfer/db_transfer_svc/Dockerfile81
+EXPOSE 8181
 
 ENTRYPOINT [ "java", "-jar", "app.jar" ]

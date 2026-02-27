@@ -1,6 +1,6 @@
-FROM maven:latest-eclipse-temurin-25 as builder
+FROM maven:3.9.12-eclipse-temurin-25 AS builder
 WORKDIR ./app
-COPY pom.xml
+COPY pom.xml .
 RUN mvn dependency:go-offline
 
 COPY src ./src
