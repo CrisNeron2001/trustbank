@@ -1,5 +1,5 @@
 FROM maven:3.9.12-eclipse-temurin-25 AS builder
-WORKDIR ./app
+WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
