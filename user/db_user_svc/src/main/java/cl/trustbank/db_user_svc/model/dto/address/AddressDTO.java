@@ -11,16 +11,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class AddressDTO {
-	private int addressId;
-	private String street;
-	private int houseNumber;
-	private int deptoNumber;
-	private String comune;
-	private String city;
-	private String region;
-	private int userId;
-	@JsonProperty(value = "user")
-	private UserDTO userDTO;
-	private Instant createdAt;
-	private Instant updatedAt;
+  private int addressId;
+  private String street;
+  private int houseNumber;
+  private int deptoNumber;
+  private String comune;
+  private String city;
+  private String region;
+  @JsonProperty(value = "user")
+  private UserDTO userDTO;
+  private Instant createdAt;
+  private Instant updatedAt;
 }
